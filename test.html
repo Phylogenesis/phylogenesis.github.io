@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test WCA Scrambler</title>
+		<style>
+			#moveList {
+				width: 300px;
+				height: 200px;
+			}
+			
+			#moves {
+				display: none;
+				margin-top: 30px;
+				border: 1px solid black;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea id="moveList"></textarea>
+		
+		<div id="moves"></div>
+		<script>
+			function showArrows(e, move)
+			{
+				var xmlDoc = e.contentDocument;
+				
+				switch (move) {
+					case 'R':
+						xmlDoc.querySelector('#verticalLines').style.display = 'inherit';
+						xmlDoc.querySelector('#arrowR').style.display = 'inherit';
+						break;
+					
+					case 'R\'':
+						xmlDoc.querySelector('#verticalLines').style.display = 'inherit';
+						xmlDoc.querySelector('#arrowRPrime').style.display = 'inherit';
+						break;
+					
+					case 'R2':
+						xmlDoc.querySelector('#verticalLines').style.display = 'inherit';
+						xmlDoc.querySelector('#arrowR2').style.display = 'inherit';
+						break;
+				}
+			}
+			
+			function showMoves() {
+				let moveDiv = document.querySelector('#moves');
+				moveDiv.style.display = 'inherit';
+				moveDiv.innerHTML = '';
+				
+				let moves = document.querySelector('#moveList').value.split(/\s+/);
+				
+				for (let move in moves) {
+					let object = document.createElement('object');
+					object.data = '3x3x3 Moves.svg';
+					object.type = 'image/svg+xml';
+					object.addEventListener(
+						'load',
+						function () { showArrows(this, moves[move]); }
+					)
+					
+					moveDiv.appendChild(object);
+				}
+			}
+			
+			document.querySelector('#moveList').addEventListener(
+				'change',
+				function () {
+					showMoves();
+				}
+			);
+		</script>
+	</body>
+</html>
